@@ -7,20 +7,23 @@ const player = (name, mark) => {
 /*------Board------*/
 
 const gameBoard = (() => {
-    // We will manually fill board for now
-    const boardArr = [
-        "X" , "O", "",
-        "" , "X", "",
-        "", "" , "O"
-    ]
-
+  // We will manually fill board for now
+  const boardArr = [["X", "O", " "], [" ", "X", " "], [" ", " ", " "]];
     
-    return {boardArr}
-})()
+ 
+  return { boardArr };
+})();
 
-function addBoardToDom() {
-    document.querySelector(".container")
-    
+function addMarksToDom(arr) {
+  const container = document.querySelector(".container");
+  
+
 }
 
-console.log(gameBoard)
+console.log(gameBoard);
+
+/*------Game Flow------*/
+const controlFlow = () => {
+  return;
+};
+
