@@ -11,9 +11,9 @@ const playerTwo = player("Plater Two", "O");
 const gameBoard = (() => {
   // We will manually fill board for now
   const boardArr = [
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
+    [, ,],
+    [, ,],
+    [, ,],
   ];
 
   return { boardArr };
@@ -23,23 +23,23 @@ function addMarksToDom(person) {
   //add logic from array to board
   const squares = document.querySelectorAll(".square");
   squares.forEach((square) => {
-    square.addEventListener("click", () => {
-      gameBoard.boardArr[square.dataset.position[0]][
-        square.dataset.position[1]
-      ] = person.mark;
-      console.log(square.dataset.position[0], square.dataset.position[1]);
-      square.textContent =
+    if (square.textContent == "X") {
+      removeEventListener("click", () => {});
+    } else if (square.textContent == "O") {
+      removeEventListener("click", () => {});
+    } else {
+      square.addEventListener("click", (e) => {
+        e.target.textContent = person.mark;
+        square.setAttribute(
+          "style",
+          "font-size: 60px; display: flex; justify-content:center; align-items:center; font-family: sans-serif;"
+        );
+        // Add to Array
         gameBoard.boardArr[square.dataset.position[0]][
           square.dataset.position[1]
-        ];
-      square.setAttribute(
-        "style",
-        "font-size: 60px; display: flex; justify-content:center; align-items:center; font-family: sans-serif;"
-      );
-      // have to add array
-    });
-    //square.textContent = gameBoard.boardArr[square.dataset.position[0]][square.dataset.position[1]]
-    //square.setAttribute("style", "font-size: 60px; display: flex; justify-content:center; align-items:center; font-family: sans-serif;")
+        ] = person.mark;
+      });
+    }
   });
 }
 
@@ -48,19 +48,18 @@ function addToArray() {}
 console.log(gameBoard);
 
 /*------Game Flow------*/
-const controlFlow = () => {
+const checkForWinner = () => {
   // Check for winner
-// can consolidate this!!!!
+  // can consolidate this!!!!
   // Check rows
+  let winner = "No Winner";
   const allX = (currentValue) => currentValue == "X";
   const allO = (currentValue) => currentValue == "O";
   gameBoard.boardArr.forEach((row) => {
     if (row.every(allX)) {
-      console.log("Player 1 won!"); // replace w/ return
+      winner = "Player One"; // replace w/ return
     } else if (row.every(allO)) {
-      console.log("Player 2 won!");
-    } else {
-      console.log("No one has won yet!");
+      winner = "Player Two";
     }
   });
 
@@ -70,11 +69,9 @@ const controlFlow = () => {
   );
   columns.forEach((column) => {
     if (column.every(allX)) {
-      console.log("Player one won!"); // replace w/ return
+      winner = "Player One"; // replace w/ return
     } else if (column.every(allO)) {
-      console.log("Player two won!");
-    } else {
-      console.log("No one won!");
+      winner = "Player Two";
     }
   });
 
@@ -89,18 +86,23 @@ const controlFlow = () => {
       gameBoard.boardArr[0][2],
       gameBoard.boardArr[1][1],
       gameBoard.boardArr[2][0],
-    ]
+    ],
   ];
 
   diagonals.forEach((diagonal) => {
     if (diagonal.every(allX)) {
-      console.log("Player one won!"); // replace w/ return
+      winner = "Player One"; // replace w/ return
     } else if (diagonal.every(allO)) {
-      console.log("Player two won!");
-    } else {
-      console.log("No one won!");
+      winner = playerTwo;
     }
   });
+  // return true or false depending on the winner.
 
-  return;
+  if (winner == "No Winner") {
+    return "No one won yet.";
+  } else {
+    return `Winner: ${winner}`;
+  }
 };
+
+/*------Gameplay------ */
