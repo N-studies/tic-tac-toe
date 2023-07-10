@@ -44,7 +44,6 @@ function addMarksToDom(person) {
   });
 } */
 
-
 /*------Game Flow------*/
 /*const checkForWinner = () => {
   // Check for winner
@@ -109,23 +108,23 @@ const game = () => {
     //add logic from array to board
     const squares = document.querySelectorAll(".square");
     squares.forEach((square) => {
-      if (square.textContent == "X") {
-        removeEventListener("click", () => {});
-      } else if (square.textContent == "O") {
-        removeEventListener("click", () => {});
-      } else {
-        square.addEventListener("click", (e) => {
-          e.target.textContent = person.mark;
-          square.setAttribute(
-            "style",
-            "font-size: 60px; display: flex; justify-content:center; align-items:center; font-family: sans-serif;"
-          );
-          // Add to Array
-          gameBoard.boardArr[square.dataset.position[0]][
-            square.dataset.position[1]
-          ] = person.mark;
-        });
-      }
+      square.addEventListener("click", (e) => {
+        e.target.textContent = person.mark;
+
+        if (person == playerOne) {
+          person = playerTwo;
+        } else if ((person = playerTwo)) {
+          person = playerOne;
+        }
+        square.setAttribute(
+          "style",
+          "font-size: 60px; display: flex; justify-content:center; align-items:center; font-family: sans-serif;"
+        );
+        // Add to Array
+        gameBoard.boardArr[square.dataset.position[0]][
+          square.dataset.position[1]
+        ] = person.mark;
+      },{once:true});
     });
   };
   const checkWinner = () => {
@@ -179,10 +178,24 @@ const game = () => {
     // return true or false depending on the winner.
 
     if (winner == "No Winner") {
-      return "No one won yet.";
+      return "No one won yet";
     } else {
       return `Winner: ${winner}`;
     }
   };
-  const playerTurns = (player) => {};
+  
+  const playerTurns = (player) => {
+    addMarks(player);
+    checkWinner();
+  };
+  return { playerTurns };
 };
+
+const play = game();
+
+let startButton = document.querySelector("#start");
+startButton.addEventListener("click", () => {
+  play.playerTurns(playerOne);
+});
+
+// start with x then switch to o
