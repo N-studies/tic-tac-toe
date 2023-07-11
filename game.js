@@ -129,4 +129,4 @@ startButton.addEventListener("click", () => {
   startButton.textContent = "restart"
 });
 
-// start with x then switch to o
+
