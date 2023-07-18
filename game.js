@@ -10,7 +10,10 @@ const player = (name, mark) => {
       (event) => {
         event.preventDefault();
         const formInput = form.querySelector("input");
-        console.log(formInput.value);
+        const div = document.createElement("div")
+        div.textContent = formInput.value
+        form.removeChild(formInput)
+        form.appendChild(div)
       },
       false
     );
