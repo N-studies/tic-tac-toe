@@ -1,18 +1,33 @@
 /* ------Players------*/
 
 const player = (name, mark) => {
+  const nameForms = document.querySelectorAll("form");
+  //const addNameToDom = () => {
+  nameForms.forEach((form) => {
+    const button = form.querySelector("button");
+    button.addEventListener(
+      "click",
+      (event) => {
+        event.preventDefault();
+        const formInput = form.querySelector("input");
+        console.log(formInput.value);
+      },
+      false
+    );
+  });
+  //}
   return { name, mark };
 };
 
 const playerOne = player("Player One", "X");
-const playerTwo = player("Plater Two", "O");
+const playerTwo = player("Player Two", "O");
 /*------Board------*/
 
 const gameBoard = (() => {
   const boardArr = [
-    ["","" ,""],
-    ["", "",""],
-    ["","" ,""],
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
   ];
 
   return { boardArr };
@@ -125,8 +140,6 @@ const play = game();
 let startButton = document.querySelector("#start");
 startButton.addEventListener("click", () => {
   play.playerTurns(playerOne);
-  play.clearBoard()
-  startButton.textContent = "restart"
+  play.clearBoard();
+  startButton.textContent = "restart";
 });
-
-
